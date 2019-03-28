@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.ApplicationTests" time="0.034" tests="1" errors="0" skipped="0" failures="0">
+<testsuite name="com.ApplicationTests" time="0.015" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="D:\coboASP\jdk\jre\bin"/>
     <property name="java.vm.version" value="25.112-b15"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="D:\xgzhang\java\workspace\svn\Elafs\branches\eapp-corp-quick-start-java-master"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:\xgzhang\java\workspace\svn\Elafs\branches\cobo-ding-eapp-java"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -16,7 +16,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\xgzhang\java\workspace\svn\Elafs\branches\eapp-corp-quick-start-java-master"/>
+    <property name="user.dir" value="D:\xgzhang\java\workspace\svn\Elafs\branches\cobo-ding-eapp-java"/>
     <property name="java.runtime.version" value="1.8.0_112-b15"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="D:\coboASP\jdk\jre\lib\endorsed"/>
@@ -64,5 +64,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="contextLoads" classname="com.ApplicationTests" time="0.034"/>
+  <testcase name="contextLoads" classname="com.ApplicationTests" time="0.015"/>
 </testsuite>
