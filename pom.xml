@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.dingtalk</groupId>
-	<artifactId>eapp-corp-quick-start</artifactId>
+	<artifactId>cobo-ding-eapp-java</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
-	<name>eapp-corp-quick-start</name>
+	<name>cobo-ding-eapp-java</name>
 	<description>企业自建E应用快速体验程序</description>
 
 	<parent>
