@@ -65,12 +65,12 @@ public class IndexController {
                 accessToken = String.valueOf(confiJson.get("accessToken"));
                 domain_id = String.valueOf(confiJson.get("domain_id"));
             } else {
-                bizLogger.error("获取配置信息失败!");
+                bizLogger.info("获取配置信息失败!");
                 ServiceResult serviceResult = ServiceResult.failure("-1", "获取配置信息失败!" + requestAuthCode);
                 return JSON.toJSONString(serviceResult);
             }
         } catch (Exception e) {
-            bizLogger.error("访问配置信息失败!");
+            bizLogger.info("访问配置信息失败!");
             ServiceResult serviceResult = ServiceResult.failure("-1", "访问配置信息失败!" + requestAuthCode);
             return JSON.toJSONString(serviceResult);
         }
@@ -83,12 +83,12 @@ public class IndexController {
 
         OapiUserGetuserinfoResponse oapiResponse;
         oapiResponse = client.execute(oapiRequest, accessToken);
-        bizLogger.error(String.valueOf(oapiResponse));
+        bizLogger.info(String.valueOf(oapiResponse));
         //3.查询得到当前用户的userId
         // 获得到userId之后应用应该处理应用自身的登录会话管理（session）,避免后续的业务交互（前端到应用服务端）每次都要重新获取用户身份，提升用户体验
         String userId = oapiResponse.getUserid();
         if (StringUtils.isBlank(userId)) {
-            bizLogger.error("can not found ding's user with authCode=" + requestAuthCode);
+            bizLogger.info("can not found ding's user with authCode=" + requestAuthCode);
             ServiceResult serviceResult = ServiceResult.failure("-1", "获取钉钉用户userId失败" + requestAuthCode);
             return JSON.toJSONString(serviceResult);
         }
@@ -101,7 +101,7 @@ public class IndexController {
         String avatar = StringUtils.nullToBlank(oapiUserGetResponse.getAvatar());
         String hireDate = TimeUtils.datetimeToString(oapiUserGetResponse.getHiredDate());
         String position = oapiUserGetResponse.getPosition();
-        bizLogger.error("ding user's name=" + name + ", email=" + email + ",mobile=" + mobile + ",avatar=" +
+        bizLogger.info("ding user's name=" + name + ", email=" + email + ",mobile=" + mobile + ",avatar=" +
                 avatar + ", hireDate=" + hireDate + ",position=" + position);
         String dingSSOUrl =  elafsHost + "/m/ding/sso.cobo";
         HashMap<String, String> ssoParam = new HashMap<>();
@@ -114,7 +114,7 @@ public class IndexController {
         ssoParam.put("userId", userId);
         ssoParam.put("site", domainName);
         String ssoResponse = HttpClientUtil.doPost(dingSSOUrl, ssoParam, "UTF-8");
-        bizLogger.error(ssoResponse);
+        bizLogger.info(ssoResponse);
         return ssoResponse;
     }
 
@@ -134,7 +134,7 @@ public class IndexController {
             JSONObject confiJson = (JSONObject) JSON.parse(ssoResponse);
             msgs = String.valueOf(confiJson.get("msg"));
         } catch (Exception e) {
-            bizLogger.error(e.getMessage());
+            bizLogger.info(e.getMessage());
         }
         return msgs;
     }
