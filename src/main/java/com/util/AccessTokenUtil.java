@@ -8,6 +8,8 @@ import com.taobao.api.ApiException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 import static com.config.URLConstant.URL_GET_TOKKEN;
 
 /**
@@ -16,13 +18,13 @@ import static com.config.URLConstant.URL_GET_TOKKEN;
 public class AccessTokenUtil {
     private static final Logger bizLogger = LoggerFactory.getLogger(AccessTokenUtil.class);
 
-    public static String getToken() throws RuntimeException {
+    public static String getToken(Map<String, String> paramMap) throws RuntimeException {
         try {
             DefaultDingTalkClient client = new DefaultDingTalkClient(URL_GET_TOKKEN);
             OapiGettokenRequest request = new OapiGettokenRequest();
 
-            request.setAppkey("");
-            request.setAppsecret("");
+            request.setAppkey(paramMap.get("app_key"));
+            request.setAppsecret(paramMap.get("app_secret"));
             request.setHttpMethod("GET");
             OapiGettokenResponse response = client.execute(request);
             String accessToken = response.getAccessToken();
@@ -34,8 +36,8 @@ public class AccessTokenUtil {
 
     }
 
-    public static void main(String[] args)throws ApiException{
-        String accessToken = AccessTokenUtil.getToken();
-        System.out.println(accessToken);
-    }
+//    public static void main(String[] args)throws ApiException{
+//        String accessToken = AccessTokenUtil.getToken(null);
+//        System.out.println(accessToken);
+//    }
 }
