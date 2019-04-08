@@ -37,6 +37,7 @@ public class IndexController {
      */
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String welcome() {
+        bizLogger.info("welcome");
         return "welcome";
     }
 
