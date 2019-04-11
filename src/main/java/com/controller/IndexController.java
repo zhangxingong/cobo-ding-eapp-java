@@ -32,6 +32,16 @@ public class IndexController {
     @Value("${domain.name}")
     private String domainName;
 
+    @Value("${ding.app_key}")
+    private String app_key;
+
+    @Value("${ding.app_secret}")
+    private String app_secret;
+
+    @Value("${ding.dev}")
+    private String testMode;
+
+
     /**
      * 欢迎页面,通过url访问，判断后端服务是否启动
      */
@@ -53,7 +63,12 @@ public class IndexController {
         String domain_id = "";
         String sso_secret = "";
         String accessToken = "";
-        ServiceResult dingCofigResult = getDingCofig(dingConfiUrl, domainName, requestAuthCode);
+        Map<String, String> accessParamMap = new HashMap<>();
+        accessParamMap.put("app_key", app_key);
+        accessParamMap.put("app_secret", app_secret);
+        accessParamMap.put("test", testMode);
+
+        ServiceResult dingCofigResult = getDingCofig(dingConfiUrl, domainName, requestAuthCode, accessParamMap);
         if (dingCofigResult.isSuccess()) {
             HashMap<String, String> resultMap = (HashMap<String, String>) dingCofigResult.getResult();
             domain_id = resultMap.get("domain_id");
@@ -121,7 +136,7 @@ public class IndexController {
         String domain_id = "";
         String sso_secret = "";
         String dingConfiUrl = elafsHost + "/m/api/dingConfig.cobo";
-        ServiceResult dingCofigResult = getDingCofig(dingConfiUrl, domainName, "");
+        ServiceResult dingCofigResult = getDingCofig(dingConfiUrl, domainName, "", null);
         if (dingCofigResult.isSuccess()) {
             HashMap<String, String> resultMap = (HashMap<String, String>) dingCofigResult.getResult();
             accessToken = resultMap.get("accessToken");
@@ -204,7 +219,7 @@ public class IndexController {
         return resultMap;
     }
 
-    private ServiceResult getDingCofig(String dingConfiUrl, String domainName, String requestAuthCode) throws Exception {
+    private ServiceResult getDingCofig(String dingConfiUrl, String domainName, String requestAuthCode, Map map) throws Exception {
         HashMap<String, String> configParam = new HashMap<>();
         configParam.put("site", domainName);
         String secret = "";
@@ -226,8 +241,22 @@ public class IndexController {
             bizLogger.info("访问配置信息失败!");
             return ServiceResult.failure("-1", "访问配置信息失败!" + requestAuthCode);
         }
+        Map<String, String> appKeySecretMap = null;
+        boolean isTest = false;
+        if (map != null) {
+            String test = String.valueOf(map.get("test"));
+            if ("true".equals(test)) {
+                appKeySecretMap = map;
+                isTest = true;
+            }
+        }else{
+            isTest = true;
+        }
+        if (!isTest) {
+            appKeySecretMap = getAppKeySecret(secret, sso_secret);
+        }
 
-        String accessToken = AccessTokenUtil.getToken(getAppKeySecret(secret, sso_secret));
+        String accessToken = AccessTokenUtil.getToken(appKeySecretMap);
         if (StringUtils.isBlank(accessToken)) {
             bizLogger.info("accessToken 获取失败");
             return ServiceResult.failure("-1", "accessToken 获取失败!" + requestAuthCode);
